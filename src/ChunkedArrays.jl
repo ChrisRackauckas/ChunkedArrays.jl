@@ -1,7 +1,7 @@
 __precompile__()
 
 module ChunkedArrays
-
+  using Compat
   import Base.getindex, Base.setindex!
   const .. = Val{:...}
   const BUFFER_SIZE_DEFAULT = 1000
