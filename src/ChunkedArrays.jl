@@ -21,7 +21,6 @@ module ChunkedArrays
     state::Int
     randBuffer::Array{T,N2}
     parallel::Bool
-    randBuffer2::Nullable{RemoteRef}
   end
 
   function Base.next(bufRand::ChunkedArray)
