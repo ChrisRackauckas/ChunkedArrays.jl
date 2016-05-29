@@ -14,26 +14,14 @@ module ChunkedArrays
 
   import Base: start, next, done, getindex
 
-  if VERSION > v"0.4.5"
-    type ChunkedArray{T,N1,N2}
-      chunkfunc::Function
-      outputSize::NTuple{N1,Int}
-      bufferSize::Int
-      state::Int
-      randBuffer::Array{T,N2}
-      parallel::Bool
-      randBuffer2::Future
-    end
-  else
-    type ChunkedArray{T,N1,N2}
-      chunkfunc::Function
-      outputSize::NTuple{N1,Int}
-      bufferSize::Int
-      state::Int
-      randBuffer::Array{T,N2}
-      parallel::Bool
-      randBuffer2::RemoteRef{Channel{Any}}
-    end
+  type ChunkedArray{T,N1,N2}
+    chunkfunc::Function
+    outputSize::NTuple{N1,Int}
+    bufferSize::Int
+    state::Int
+    randBuffer::Array{T,N2}
+    parallel::Bool
+    randBuffer2::RemoteRef
   end
 
   function Base.next(bufRand::ChunkedArray)
@@ -70,7 +58,7 @@ module ChunkedArrays
     if parallel
       ChunkedArray{T,length(outputSize),length(outputSize)+1}(chunkfunc,outputSize,bufferSize,0,chunkfunc(outputSize...,bufferSize),parallel,@spawn chunkfunc(outputSize...,bufferSize))
     else
-      @compat ChunkedArray{T,length(outputSize),length(outputSize)+1}(chunkfunc,outputSize,bufferSize,0,chunkfunc(outputSize...,bufferSize),parallel,RemoteChannel())
+      ChunkedArray{T,length(outputSize),length(outputSize)+1}(chunkfunc,outputSize,bufferSize,0,chunkfunc(outputSize...,bufferSize),parallel,RemoteRef())
     end
   end
 
@@ -79,7 +67,7 @@ module ChunkedArrays
     if parallel
       ChunkedArray{T,0,1}(chunkfunc,(),bufferSize,0,chunkfunc(bufferSize),parallel,@spawn chunkfunc(bufferSize))
     else
-      @compat ChunkedArray{T,0,1}(chunkfunc,(),bufferSize,0,chunkfunc(bufferSize),parallel,RemoteChannel())
+      @compat ChunkedArray{T,0,1}(chunkfunc,(),bufferSize,0,chunkfunc(bufferSize),parallel,RemoteRef())
     end
   end
 
@@ -90,7 +78,7 @@ module ChunkedArrays
       chunkfunc(outputSize...,bufferSize),parallel,@spawn chunkfunc(outputSize...,bufferSize))
     else
       @compat ChunkedArray{eltype(randPrototype),length(outputSize),length(outputSize)+1}(chunkfunc,outputSize,bufferSize,0,
-      chunkfunc(outputSize...,bufferSize),parallel,RemoteChannel())
+      chunkfunc(outputSize...,bufferSize),parallel,RemoteRef())
     end
   end
 
