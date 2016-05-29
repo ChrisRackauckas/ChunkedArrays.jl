@@ -14,6 +14,7 @@ module ChunkedArrays
 
   import Base: start, next, done, getindex
 
+  typealias RemoteRef Future #Version incompatibilities
   type ChunkedArray{T,N1,N2}
     chunkfunc::Function
     outputSize::NTuple{N1,Int}
@@ -21,6 +22,7 @@ module ChunkedArrays
     state::Int
     randBuffer::Array{T,N2}
     parallel::Bool
+    randBuffer2::Nullable{RemoteRef}
   end
 
   function Base.next(bufRand::ChunkedArray)
