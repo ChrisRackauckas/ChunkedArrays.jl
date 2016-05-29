@@ -24,9 +24,7 @@ println(next(chunkRand4))
 println("Random Generating Benchmark")
 const loopSize = 1000
 const buffSize = 100
-const numRuns = 400
-Pkg.add("Benchmark")
-using Benchmark
+const numRuns = 40
 
 function test1()
   j=[0;0;0;0]
@@ -123,17 +121,17 @@ function test11()
   end
 end
 
-t1 = benchmark(test1,"Test 1",numRuns)[:AverageWall][1]
-t2 = benchmark(test2,"Test 2",numRuns)[:AverageWall][1]
-t3 = benchmark(test3,"Test 3",numRuns)[:AverageWall][1]
-t4 = benchmark(test4,"Test 4",numRuns)[:AverageWall][1]
-t5 = benchmark(test5,"Test 5",numRuns)[:AverageWall][1]
-t6 = benchmark(test6,"Test 6",numRuns)[:AverageWall][1]
-t7 = benchmark(test7,"Test 7",numRuns)[:AverageWall][1]
-t8 = benchmark(test8,"Test 8",numRuns)[:AverageWall][1]
-t9 = benchmark(test9,"Test 9",numRuns)[:AverageWall][1]
-t10= benchmark(test10,"Test 10",numRuns)[:AverageWall][1]
-t11= benchmark(test10,"Test 11",numRuns)[:AverageWall][1]
+t1 = @elapsed(for i=1:numRuns test1() end)/numRuns
+t2 = @elapsed(for i=1:numRuns test2() end)/numRuns
+t3 = @elapsed(for i=1:numRuns test3() end)/numRuns
+t4 = @elapsed(for i=1:numRuns test4() end)/numRuns
+t5 = @elapsed(for i=1:numRuns test5() end)/numRuns
+t6 = @elapsed(for i=1:numRuns test6() end)/numRuns
+t7 = @elapsed(for i=1:numRuns test7() end)/numRuns
+t8 = @elapsed(for i=1:numRuns test8() end)/numRuns
+t9 = @elapsed(for i=1:numRuns test9() end)/numRuns
+t10= @elapsed(for i=1:numRuns test10() end)/numRuns
+t11= @elapsed(for i=1:numRuns test11() end)/numRuns
 
 println("""Test Results For Average Time:
 One-by-one:                             $t1

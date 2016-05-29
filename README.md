@@ -4,8 +4,8 @@
 
 
 ChunkedArrays.jl is a package for increasing the performance of arrays generated
-inside of loops. Some basic benchmarks show chunked arrays being almost 2x
-as fast as naive approaches. One use case for this is using random numbers in
+inside of loops. Some basic benchmarks show chunked arrays being almost 50%
+faster than naive approaches. One use case for this is using random numbers in
 a loop. It's well known that for many reasons (including SIMD) that generating
 1000 random number generators at once using `rand(1000)` is faster than generating
 1000 random numbers in separate calls of `rand()`. ChunkedArrays allows you to
@@ -63,10 +63,10 @@ end
 ```
 
 This uses the constructor `ChunkedArray(chunkfunc::Function,bufferSize::Int=BUFFER_SIZE_DEFAULT,T::Type=Float64,parallel=PARALLEL_DEFAULT)`
-which has a buffer size of 1000 and uses parallel generation. Note that you
-do not need to be running multiple processes for parallel generation to work
-(and it will still speed up in most cases due to magic). If we instead wished
-to generate `randn(4,2)` each time in the loop, we can specify the dimensions:
+which has a buffer size of 1000 and does not use parallel generation. Note that you
+do not need to be running multiple processes for parallel generation to work.
+If we instead wished to generate `randn(4,2)` each time in the loop, we can
+specify the dimensions:
 
 ```julia
 chunkRand = ChunkedArray(randn,(4,2))
@@ -96,38 +96,24 @@ and it will generate standard normals of `similar(j)`.
 
 # Benchmarks
 
-These benchmarks can be found in the test folder.
+These benchmarks can be found in the test folder. For small runs (which are required
+for CI) there is little difference, but as the loop size increases the difference
+grows.
 
 ```julia
-const loopSize = 1000
-const buffSize = 100
+const loopSize = 1000000
+const buffSize = 10000
 const numRuns = 400
 Test Results For Average Time:
-One-by-one:                             0.00042966970000000006
-Thousand-by-Thousand:                   0.00023297742499999997
-Altogether:                             0.00034394069999999985
-Hundred-by-hundred:                     0.00017033829999999996
-Take at Beginning:                      0.0002823700749999999
-Pre-made Rands:                         0.000126215025
-Chunked Rands Premade:                  0.00015799929999999997
-Chunked Rands 100 buffer:               0.000101266225
-Chunked Rands Direct:                   0.00014037630000000005
-Chunked Rands Max buffer:               0.000102320075
-Parallel Chunked Rands 100 buffer:      0.000192345075
-
-const loopSize = 100000
-const buffSize = 1000
-const numRuns = 400
-Test Results For Average Time:
-One-by-one:                             0.01616514919749999
-Thousand-by-Thousand:                   0.02157321027
-Altogether:                             0.021144474409999975
-Hundred-by-hundred:                     0.020440966562499992
-Take at Beginning:                      0.021992810439999982
-Pre-made Rands:                         0.018754385990000007
-Chunked Rands Premade:                  0.012083974932500005
-Chunked Rands 1000 buffer:              0.013059985279999993
-Chunked Rands Direct:                   0.014707403045000003
-Chunked Rands Max buffer:               0.013439485149999994
-Parallel Chunked Rands 1000 buffer:     0.011821751972499999
+One-by-one:                             0.148530531075
+Thousand-by-Thousand:                   0.189417186075
+Altogether:                             0.2057703961
+Hundred-by-hundred:                     0.191497048
+Take at Beginning:                      0.20445405967500002
+Pre-made Rands:                         0.16260088565
+Chunked Rands Premade:                  0.1032136674
+Chunked Rands 10000 buffer:             0.10846818174999999
+Chunked Rands Direct:                   0.134752111825
+Chunked Rands Max buffer:               0.120411857925
+Parallel Chunked Rands 10000 buffer:    0.1276476319
 ```
