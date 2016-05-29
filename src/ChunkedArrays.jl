@@ -47,7 +47,7 @@ module ChunkedArrays
       bufRand.state = 0
     end
     bufRand.state += 1
-    if length(bufRand.outputSize)<2
+    if length(bufRand.outputSize)<1
       return(bufRand.randBuffer[bufRand.state])
     else
       return(bufRand.randBuffer[..,bufRand.state])
