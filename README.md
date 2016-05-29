@@ -1,5 +1,8 @@
 # ChunkedArrays
 
+[![Build Status](https://travis-ci.org/ChrisRackauckas/ChunkedArrays.jl.svg?branch=master)](https://travis-ci.org/ChrisRackauckas/ChunkedArrays.jl) [![Build status](https://ci.appveyor.com/api/projects/status/2fm6c86aelajy7gc?svg=true)](https://ci.appveyor.com/project/ChrisRackauckas/chunkedarrays-jl)
+
+
 ChunkedArrays is a package for increasing the performance of arrays generated
 inside of loops. Some basic benchmarks show chunked arrays being almost 2x
 as fast as naive approaches. One use case for this is using random numbers in
