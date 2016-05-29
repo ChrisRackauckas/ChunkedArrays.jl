@@ -2,7 +2,7 @@
 
 ChunkedArrays is a package for increasing the performance of arrays generated
 inside of loops. Some basic benchmarks show chunked arrays being almost 2x
-as fast as naive approaches One use case for this is using random numbers in
+as fast as naive approaches. One use case for this is using random numbers in
 a loop. It's well known that for many reasons (including SIMD) that generating
 1000 random number generators at once using `rand(1000)` is faster than generating
 1000 random numbers in separate calls of `rand()`. ChunkedArrays allows you to
