@@ -34,7 +34,7 @@ module ChunkedArrays
         else
           bufRand.randBuffer2 = @spawn bufRand.chunkfunc(bufRand.outputSize...,bufRand.bufferSize)
         end
-        bufRand.randBuffer[:] = fetch(bufRand.randBuffer2)[:]
+        bufRand.randBuffer[:] = (fetch(bufRand.randBuffer2))[:]
       else
         if bufRand.outputSize == ()
           bufRand.randBuffer[:] = bufRand.chunkfunc(bufRand.bufferSize)
@@ -63,7 +63,7 @@ module ChunkedArrays
   end
 
 
-  function ChunkedArray(chunkfunc::Function,bufferSize::Int=BUFFER_SIZE_DEFAULT,T::Type=Float64,parallel=PARALLEL_DEFAULT)
+  function ChunkedArray(chunkfunc::Function,bufferSize::Int=BUFFER_SIZE_DEFAULT,T::Type=Float64;parallel=PARALLEL_DEFAULT)
     if parallel
       ChunkedArray{T,0,1}(chunkfunc,(),bufferSize,0,chunkfunc(bufferSize),parallel,@spawn chunkfunc(bufferSize))
     else
@@ -71,7 +71,7 @@ module ChunkedArrays
     end
   end
 
-  function ChunkedArray(chunkfunc,randPrototype::AbstractArray,bufferSize=BUFFER_SIZE_DEFAULT,parallel=PARALLEL_DEFAULT)
+  function ChunkedArray(chunkfunc,randPrototype::AbstractArray,bufferSize=BUFFER_SIZE_DEFAULT;parallel=PARALLEL_DEFAULT)
     outputSize = size(randPrototype)
     if parallel
       ChunkedArray{eltype(randPrototype),length(outputSize),length(outputSize)+1}(chunkfunc,outputSize,bufferSize,0,

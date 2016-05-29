@@ -83,7 +83,7 @@ function test6()
   end
 end
 
-const chunkRands = ChunkedArray(randn,(4,),loopSize)
+const chunkRands = ChunkedArray(randn,(4,),loopSize,parallel=false)
 function test7()
   j=[0;0;0;0]
   for i = 1:loopSize
@@ -92,7 +92,7 @@ function test7()
 end
 
 function test8()
-  rands2 = ChunkedArray(randn,(4,),buffSize)
+  rands2 = ChunkedArray(randn,(4,),buffSize,parallel=false)
   j=[0;0;0;0]
   for i = 1:loopSize
     j += next(rands2)
@@ -100,7 +100,7 @@ function test8()
 end
 
 function test9()
-  rands3 = ChunkedArray(randn,(4,),loopSize)
+  rands3 = ChunkedArray(randn,(4,),loopSize,parallel=false)
   j=[0;0;0;0]
   for i = 1:loopSize
     j += rands3.randBuffer[i]
@@ -108,7 +108,7 @@ function test9()
 end
 
 function test10()
-  rands4 = ChunkedArray(randn,(4,),loopSize)
+  rands4 = ChunkedArray(randn,(4,),loopSize,parallel=false)
   j=[0;0;0;0]
   for i = 1:loopSize
     j += next(rands4)
@@ -116,10 +116,10 @@ function test10()
 end
 
 function test11()
-  rands2 = ChunkedArray(randn,(4,),buffSize,parallel=true)
+  rands5 = ChunkedArray(randn,(4,),buffSize,parallel=true)
   j=[0;0;0;0]
   for i = 1:loopSize
-    j += next(rands2)
+    j += next(rands5)
   end
 end
 
@@ -143,9 +143,9 @@ Hundred-by-hundred:                     $t4
 Take at Beginning:                      $t5
 Pre-made Rands:                         $t6
 Chunked Rands Premade:                  $t7
-Chunked Rands 1000 buffer:              $t8
+Chunked Rands $buffSize buffer:              $t8
 Chunked Rands Direct:                   $t9
 Chunked Rands Max buffer:               $t10
-Parallel Chunked Rands 1000 buffer:     $t11
+Parallel Chunked Rands $buffSize buffer:     $t11
 """)
 toc()

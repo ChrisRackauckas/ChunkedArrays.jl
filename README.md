@@ -28,9 +28,9 @@ using ChunkedArrays
 You can define a ChunkedArray in one of the three forms:
 
 ```julia
-ChunkedArray(chunkfunc::Function,bufferSize::Int=BUFFER_SIZE_DEFAULT,T::Type=Float64,parallel=PARALLEL_DEFAULT)
+ChunkedArray(chunkfunc::Function,bufferSize::Int=BUFFER_SIZE_DEFAULT,T::Type=Float64;parallel=PARALLEL_DEFAULT)
 ChunkedArray(chunkfunc::Function,outputSize::NTuple,bufferSize::Int=BUFFER_SIZE_DEFAULT,T::Type=Float64;parallel=PARALLEL_DEFAULT)
-ChunkedArray(chunkfunc,randPrototype::AbstractArray,bufferSize=BUFFER_SIZE_DEFAULT,parallel=PARALLEL_DEFAULT)
+ChunkedArray(chunkfunc,randPrototype::AbstractArray,bufferSize=BUFFER_SIZE_DEFAULT;parallel=PARALLEL_DEFAULT)
 ```
 
 Then, to generate the next value in the array, you use the `next` function like:
@@ -103,17 +103,17 @@ const loopSize = 1000
 const buffSize = 100
 const numRuns = 400
 Test Results For Average Time:
-One-by-one:                             0.00020667178250000009
-Thousand-by-Thousand:                   0.00022077821749999992
-Altogether:                             0.00019529368999999985
-Hundred-by-hundred:                     0.00019280540250000012
-Take at Beginning:                      0.00017918784750000003
-Pre-made Rands:                         0.00015759312749999993
-Chunked Rands Premade:                  0.00010677851500000006
-Chunked Rands 1000 buffer:              0.00012795537
-Chunked Rands Direct:                   0.00013939932250000002
-Chunked Rands Max buffer:               0.00012713422500000002
-Parallel Chunked Rands 1000 buffer:     0.00011442271000000018
+One-by-one:                             0.00042966970000000006
+Thousand-by-Thousand:                   0.00023297742499999997
+Altogether:                             0.00034394069999999985
+Hundred-by-hundred:                     0.00017033829999999996
+Take at Beginning:                      0.0002823700749999999
+Pre-made Rands:                         0.000126215025
+Chunked Rands Premade:                  0.00015799929999999997
+Chunked Rands 100 buffer:               0.000101266225
+Chunked Rands Direct:                   0.00014037630000000005
+Chunked Rands Max buffer:               0.000102320075
+Parallel Chunked Rands 100 buffer:      0.000192345075
 
 const loopSize = 100000
 const buffSize = 1000
