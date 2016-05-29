@@ -14,6 +14,10 @@ module ChunkedArrays
 
   import Base: start, next, done, getindex
 
+  if VERSION > v"0.4.5"
+    typealias RemoteRef Future
+  end
+  
   @compat type ChunkedArray{T,N1,N2}
     chunkfunc::Function
     outputSize::NTuple{N1,Int}
