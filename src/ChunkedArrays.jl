@@ -1,7 +1,7 @@
 __precompile__()
 
 module ChunkedArrays
-  using EllipsesNotation, Compat
+  using EllipsisNotation, Compat
 
   const BUFFER_SIZE_DEFAULT = 1000
   const PARALLEL_DEFAULT = false
