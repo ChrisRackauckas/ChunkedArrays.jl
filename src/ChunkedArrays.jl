@@ -1,16 +1,10 @@
 __precompile__()
 
 module ChunkedArrays
-  using Compat
-  import Base.getindex, Base.setindex!
-  const .. = Val{:...}
+  using EllipsesNotation
+  
   const BUFFER_SIZE_DEFAULT = 1000
   const PARALLEL_DEFAULT = false
-  getindex{T}(A::AbstractArray{T,1}, ::Type{Val{:...}}, n::Int) = A[n]
-  getindex{T}(A::AbstractArray{T,2}, ::Type{Val{:...}}, n::Int) = A[ :, n]
-  getindex{T}(A::AbstractArray{T,3}, ::Type{Val{:...}}, n::Int) = A[ :, :, n]
-  getindex{T}(A::AbstractArray{T,4}, ::Type{Val{:...}}, n::Int) = A[ :, :, :, n]
-  getindex{T}(A::AbstractArray{T,5}, ::Type{Val{:...}}, n::Int) = A[ :, :, :, :, n]
 
   import Base: start, next, done, getindex
 
