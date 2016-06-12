@@ -15,7 +15,7 @@ module ChunkedArrays
     state::Int
     randBuffer::Array{T,N2}
     parallel::Bool
-    randBuffer2::RemoteRef
+    randBuffer2::Future
   end
 
   function Base.next(bufRand::ChunkedArray)
@@ -52,7 +52,7 @@ module ChunkedArrays
     if parallel
       ChunkedArray{T,length(outputSize),length(outputSize)+1}(chunkfunc,outputSize,bufferSize,0,chunkfunc(outputSize...,bufferSize),parallel,@spawn chunkfunc(outputSize...,bufferSize))
     else
-      ChunkedArray{T,length(outputSize),length(outputSize)+1}(chunkfunc,outputSize,bufferSize,0,chunkfunc(outputSize...,bufferSize),parallel,RemoteRef())
+      ChunkedArray{T,length(outputSize),length(outputSize)+1}(chunkfunc,outputSize,bufferSize,0,chunkfunc(outputSize...,bufferSize),parallel,Future())
     end
   end
 
@@ -61,7 +61,7 @@ module ChunkedArrays
     if parallel
       ChunkedArray{T,0,1}(chunkfunc,(),bufferSize,0,chunkfunc(bufferSize),parallel,@spawn chunkfunc(bufferSize))
     else
-      @compat ChunkedArray{T,0,1}(chunkfunc,(),bufferSize,0,chunkfunc(bufferSize),parallel,RemoteRef())
+      @compat ChunkedArray{T,0,1}(chunkfunc,(),bufferSize,0,chunkfunc(bufferSize),parallel,Future())
     end
   end
 
@@ -72,7 +72,7 @@ module ChunkedArrays
       chunkfunc(outputSize...,bufferSize),parallel,@spawn chunkfunc(outputSize...,bufferSize))
     else
       @compat ChunkedArray{eltype(randPrototype),length(outputSize),length(outputSize)+1}(chunkfunc,outputSize,bufferSize,0,
-      chunkfunc(outputSize...,bufferSize),parallel,RemoteRef())
+      chunkfunc(outputSize...,bufferSize),parallel,Future())
     end
   end
 

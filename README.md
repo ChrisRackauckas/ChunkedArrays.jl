@@ -23,6 +23,8 @@ Pkg.add("ChunkedArrays")
 using ChunkedArrays
 ```
 
+Note that version v0.0.2 is the last version which targets Julia v0.4. The current master has some changes which only work on v0.5.
+
 # Using the Package
 
 You can define a ChunkedArray in one of the three forms:
