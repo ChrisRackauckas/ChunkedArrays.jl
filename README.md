@@ -23,7 +23,7 @@ Pkg.add("ChunkedArrays")
 using ChunkedArrays
 ```
 
-Note that version v0.0.2 is the last version which targets Julia v0.4. The current master has some changes which only work on v0.5.
+Note that version v0.0.2 is the last version which targets Julia v0.4. The current master has some changes which only work on v0.5. For an up-to-date version with v0.4 compatibility, check out the v0.4-compat branch.
 
 # Using the Package
 
