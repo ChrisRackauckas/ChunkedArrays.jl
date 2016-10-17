@@ -28,7 +28,7 @@ module ChunkedArrays
         else
           bufRand.randBuffer2 = @spawn bufRand.chunkfunc(bufRand.outputSize...,bufRand.bufferSize)
         end
-        @compat bufRand.randBuffer[:] = fetch(bufRand.randBuffer2)[:]
+        bufRand.randBuffer[:] = fetch(bufRand.randBuffer2)[:]
       else
         if bufRand.outputSize == ()
           bufRand.randBuffer[:] = bufRand.chunkfunc(bufRand.bufferSize)
@@ -61,7 +61,7 @@ module ChunkedArrays
     if parallel
       ChunkedArray{T,0,1}(chunkfunc,(),bufferSize,0,chunkfunc(bufferSize),parallel,@spawn chunkfunc(bufferSize))
     else
-      @compat ChunkedArray{T,0,1}(chunkfunc,(),bufferSize,0,chunkfunc(bufferSize),parallel,Future())
+      ChunkedArray{T,0,1}(chunkfunc,(),bufferSize,0,chunkfunc(bufferSize),parallel,Future())
     end
   end
 
@@ -71,7 +71,7 @@ module ChunkedArrays
       ChunkedArray{eltype(randPrototype),length(outputSize),length(outputSize)+1}(chunkfunc,outputSize,bufferSize,0,
       chunkfunc(outputSize...,bufferSize),parallel,@spawn chunkfunc(outputSize...,bufferSize))
     else
-      @compat ChunkedArray{eltype(randPrototype),length(outputSize),length(outputSize)+1}(chunkfunc,outputSize,bufferSize,0,
+      ChunkedArray{eltype(randPrototype),length(outputSize),length(outputSize)+1}(chunkfunc,outputSize,bufferSize,0,
       chunkfunc(outputSize...,bufferSize),parallel,Future())
     end
   end
