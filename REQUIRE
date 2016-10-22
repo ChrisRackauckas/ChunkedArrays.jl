@@ -1,3 +1,2 @@
 julia 0.5
-Compat
-EllipsisNotation
+EllipsisNotation 0.0.2
