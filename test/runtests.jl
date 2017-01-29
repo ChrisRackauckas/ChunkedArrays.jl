@@ -9,10 +9,6 @@ chunkRand = ChunkedArray(randn,float(u),10)
 
 println(next(chunkRand))
 
-chunkRand2 = ChunkedArray(randn,(3,3),100)
-
-println(next(chunkRand2))
-
 chunkRand3 = ChunkedArray(randn,100)
 
 println(next(chunkRand3))
@@ -81,7 +77,7 @@ function test6()
   end
 end
 
-const chunkRands = ChunkedArray(randn,(4,),loopSize,parallel=false)
+const chunkRands = ChunkedArray(randn,randn(4),loopSize)
 function test7()
   j=[0;0;0;0]
   for i = 1:loopSize
@@ -90,7 +86,7 @@ function test7()
 end
 
 function test8()
-  rands2 = ChunkedArray(randn,(4,),buffSize,parallel=false)
+  rands2 = ChunkedArray(randn,randn(4),loopSize)
   j=[0;0;0;0]
   for i = 1:loopSize
     j += next(rands2)
@@ -98,7 +94,7 @@ function test8()
 end
 
 function test9()
-  rands3 = ChunkedArray(randn,(4,),loopSize,parallel=false)
+  rands3 = ChunkedArray(randn,randn(4),loopSize)
   j=[0;0;0;0]
   for i = 1:loopSize
     j += rands3.randBuffer[i]
@@ -106,7 +102,7 @@ function test9()
 end
 
 function test10()
-  rands4 = ChunkedArray(randn,(4,),loopSize,parallel=false)
+  rands4 = ChunkedArray(randn,randn(4),loopSize)
   j=[0;0;0;0]
   for i = 1:loopSize
     j += next(rands4)
@@ -114,7 +110,7 @@ function test10()
 end
 
 function test11()
-  rands5 = ChunkedArray(randn,(4,),buffSize,parallel=true)
+  rands5 = ChunkedArray(randn,randn(4),loopSize)
   j=[0;0;0;0]
   for i = 1:loopSize
     j += next(rands5)
